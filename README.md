@@ -10,7 +10,7 @@ Menu-driven command line binary search tree. Actions include:
 8. Delete an element
 0. To exit the program
 
-For example the input: 
-1 100 1 50 1 50 1 100 1 100 5 6 0
-Would give the output:
+For example the input:\
+1 100 1 50 1 50 1 100 1 100 5 6 0\
+Would give the output:\
 100(3)50(2)50(2)100(3)
