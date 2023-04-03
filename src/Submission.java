@@ -3,22 +3,10 @@ import java.util.Scanner;
 
 class Node {
     int key, count;
-    Node left;
-    Node right;
+    Node left, right;
 }
 
 class Tree {
-
-    public Node lookFor(Node node, int key) {
-        if (node == null || node.key == key) {
-            return node;
-        }
-        if (node.key < key) {
-            return lookFor(node.right, key);
-        }
-        return lookFor(node.left,  key);
-
-    }
 
     public Node deleteNode(Node node, int key) {
         if (node == null) {
@@ -36,11 +24,7 @@ class Tree {
                 Node t;
                 t = node.left == null ? node.right : node.left;
 
-                if (t == null) {
-                    return null;
-                } else {
-                    return t;
-                }
+                return t;
 
             } else {
                 Node lower = getLower(node);
@@ -50,6 +34,17 @@ class Tree {
             }
         }
         return node;
+    }
+
+    public Node lookFor(Node node, int key) {
+        if (node == null || node.key == key) {
+            return node;
+        }
+        if (node.key < key) {
+            return lookFor(node.right, key);
+        }
+        return lookFor(node.left,  key);
+
     }
 
     public Node getLower(Node node) {
@@ -85,7 +80,7 @@ class Tree {
         //if it isn't then look down the tree
         if (key < node.key) {
             node.left = insertNode(node.left, key);
-        } else if (key > node.key) {
+        } else {
             node.right = insertNode(node.right, key);
         }
         return node;
@@ -144,23 +139,21 @@ class Tree {
 public class Submission {
     public static void main(String[] args) {
 
-
         Tree t = new Tree();
         Scanner scanner = new Scanner(System.in);
-        int input = 1, key;
+        int input, key;
         Node n = null;
 
-        while (input >= 0 && input <= 8) {
+        while (true) {
             input = scanner.nextInt();
             //System.out.println(input);
             switch (input) {
-                default:
-                    System.exit(0);
-                case 1:
+                default -> System.exit(0);
+                case 1 -> {
                     key = scanner.nextInt();
                     n = t.insertNode(n, key);
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     key = scanner.nextInt();
                     Node temp1 = t.lookFor(n, key);
                     if (temp1 == null) {
@@ -168,125 +161,31 @@ public class Submission {
                     } else {
                         System.out.print(temp1.key + "(" + temp1.count + ")");
                     }
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     Node temp = t.findBiggest(n);
                     if (temp == null) {
                         System.out.print("0(0)");
                     } else {
                         System.out.print(temp.key + "(" + temp.count + ")");
                     }
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     Node temp2 = t.findSmallest(n);
                     if (temp2 == null) {
                         System.out.print("0(0)");
                     } else {
                         System.out.print(temp2.key + "(" + temp2.count + ")");
                     }
-                    break;
-                case 5:
-                    t.printPreOrder(n);
-                    break;
-                case 6:
-                    t.printPostOrder(n);
-                    break;
-                case 7:
-                    t.printInOrder(n);
-                    break;
-                case 8:
+                }
+                case 5 -> t.printPreOrder(n);
+                case 6 -> t.printPostOrder(n);
+                case 7 -> t.printInOrder(n);
+                case 8 -> {
                     key = scanner.nextInt();
                     n = t.deleteNode(n, key);
-                    break;
+                }
             }
         }
     }
-
-
 }
-
-//        n = t.insertNode(n, 100);
-//        n = t.insertNode(n, 100);
-//        n = t.insertNode(n, 50);
-//        n = t.insertNode(n, 150);
-//        t.printPreOrder(n);
-//        t.printPostOrder(n);
-
-
-//        while (input >= 0 && input <= 8) {
-//            input = scanner.nextInt();
-//
-//            if (input == 0) {
-//                System.exit(1);
-//            } else if (input == 1) {
-//                int key = scanner.nextInt();
-//                n = t.createNode(key);
-//                t.insertNode(n, key);
-//                t.printPreOrder(n);
-//                break;
-//            } else if (input == 5) {
-//                t.printPreOrder(n);
-//                break;
-//            }
-
-//            switch (input) {
-//                case 0:
-//                    //System.out.println("exit");
-//                    System.exit(1);
-//                case 1:
-//                    key = scanner.nextInt();
-//                    Node n = t.createNode(key);
-//                    //System.out.println("new nodes key: " + key);
-//                    t.insertNode(n, key);
-//
-//                    //printTree(n);
-//                    //inorder(n);
-//
-//                    //System.out.println("insert element");
-//                    break;
-//                case 5:
-//                    t.printPreOrder(n);
-//
-//                    break;
-//                case 7:
-//                    key = scanner.nextInt();
-//                    Node m = t.createNode(key);
-//                    inorder(m);
-//
-//                case 8:
-//                    key = scanner.nextInt();
-//                    Node b = t.createNode(key);
-//                    t.deleteNode(b, key);
-//                    break;
-//                //TODO: check this
-//                default:
-//                    System.exit(1);
-//            }
-
-
-//    public static void printTree(Node node) {
-//        // base case
-//        if (node == null) {
-//            return;
-//        }
-//
-//        if (node.left == null && node.right == null) {
-//            System.out.print(node.key + "(" + node.count + ")");
-//        }
-//
-//        printTree(node.left);
-//        printTree(node.right);
-//    }
-
-//    static void inorder(Node root)
-//    {
-//        if (root != null)
-//        {
-//            inorder(root.left);
-//            System.out.print(root.key + "(" +
-//                    root.count + ") ");
-//            inorder(root.right);
-//        }
-//    }
-
-
